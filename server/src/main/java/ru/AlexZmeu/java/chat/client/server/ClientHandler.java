@@ -53,6 +53,14 @@ public class ClientHandler {
                 if (message.startsWith("/w ")) {
                     // TODO homework chat part 1
                 }
+                if (message.startsWith("/kick")){
+                    if(server.getUserService().isAdmin(username)){
+                       String UserToKick = message.split(" ")[1];
+                       server.kickUser(UserToKick, this);
+                       continue;
+                    }
+                    sendMessage("Недостаточно прав для команды kick");
+                }
             }
             server.broadcastMessage(username + ": " + message);
         }
