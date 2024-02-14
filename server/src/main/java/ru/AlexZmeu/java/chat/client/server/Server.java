@@ -61,4 +61,17 @@ public class Server {
         }
         return false;
     }
+
+    public void kickUser(String username, ClientHandler admin){
+        ClientHandler userToKick = clients.stream().filter(client -> username.equals(client.getUserName())).findFirst().orElse(null);
+        if (userToKick == null) {
+            admin.sendMessage("Пользователь " + username + " не найден");
+            return;
+        }
+
+        userToKick.disconnect();
+        admin.sendMessage("Пользователь " + username + " кикнут из чата");
+
+
+    }
 }
