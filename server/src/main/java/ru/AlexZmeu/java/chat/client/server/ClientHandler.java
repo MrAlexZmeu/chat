@@ -34,7 +34,12 @@ public class ClientHandler {
                             break;
                         }
                         if (message.startsWith("/w")) {
-                            //TO DO
+                            String[] parts = message.split(" ", 3);
+                            if (parts.length == 3) {
+                                server.sendPrivateMessage(this, parts[1], parts[2]);
+                                continue;
+                            }
+                            sendMessage("Для отправки личного сообщения введите /w name message");
                         }
                     }
                     server.broadcastMessage(username + ": " + message);
@@ -47,35 +52,35 @@ public class ClientHandler {
         }).start();
     }
 
-    public void sendMessage(String message){
+    public void sendMessage(String message) {
         try {
             out.writeUTF(message);
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void disconnect(){
+    public void disconnect() {
         server.unsubscribe(this);
-        try{
-            if(in != null){
+        try {
+            if (in != null) {
                 in.close();
             }
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        try{
-            if(out != null){
+        try {
+            if (out != null) {
                 out.close();
             }
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        try{
-            if(socket != null){
+        try {
+            if (socket != null) {
                 socket.close();
             }
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
